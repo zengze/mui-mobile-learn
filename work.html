@@ -38,16 +38,63 @@
 				color: #fff;
 				background-color: #f7da64;
 			}
+			.mui-grid-view.mui-grid-9 {
+				border-top: 0px solid #eee;
+				border-left: 0px solid #eee;
+				background-color: #fff;
+			}
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				padding: 5px 5px;
+				border-right: 0px solid #eee;
+				border-bottom: 0px solid #eee;
+			}
+			.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
+				font-size: 24px;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				font-size: 13px;
+			}
+			.list-title {
+				padding: 5px 5px;
+				background-color: #f7f7f7;
+				border-bottom: 1px solid #eee;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div class="title">
-					这是webview模式选项卡中的第2个子页面，该页面展示一个支持下拉刷新、上拉加载的消息列表
-				</div>
-				<ul class="mui-table-view mui-table-view-chevron">
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-home"></span>
+							<div class="mui-media-body">任务中心</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-email"></span>
+							<div class="mui-media-body">工作报告</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-chatbubble">
+								<span class="mui-badge">5</span>
+							</span>
+							<div class="mui-media-body">通知中心</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-info"></span>
+							<div class="mui-media-body">我的评分</div>
+						</a>
+					</li>
+				</ul>
+				<ul id='work-list' class="mui-table-view mui-table-view-chevron">
+					<div class='list-title'>我的工作</div>
 					<li class="mui-table-view-cell">
 						<div class="mui-table">
 						  <div class="mui-table-cell mui-col-xs-10">
@@ -107,8 +154,6 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1000);
 			}
@@ -119,7 +164,7 @@
 			function pullupRefresh() {
 				setTimeout(function() {
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 0)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
+					var table = document.getElementById('work-list');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for (var i = cells.length, len = i + 1; i < len; i++) {
 						var li = document.createElement('li');
