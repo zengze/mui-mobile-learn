@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>ECahrt 示例</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="./css/icons-extra.css" />
+		<style>
+			.chart {
+				height: 150px;
+				margin: 0px;
+				padding: 0px;
+			}
+			h5 {
+				margin-top: 30px;
+				font-weight: bold;
+			}
+			h5:first-child {
+				margin-top: 5px;
+			}
+			li {
+				list-style-type:none;
+			}
+			ul {
+				margin: 0px;
+				padding: 0px;
+			}
+			.mui-content-padded {
+				background-color: #fff;
+				margin: 0px;
+				padding: 10px;
+				border-bottom: 1px solid #eee;
+			}
+			/*首页运维报表大类*/
+			.home-yunwei-top {
+			  height: 60px;
+			  text-align: center;
+			  border: 1px solid #e0e1e1;
+			}
+			.home-yunwei-top ul li {
+			  width: 33.33333%;
+			  height: 58px;
+			  line-height: 58px;
+			  float: left;
+			  position: relative;
+			}
+			#home-yunwei-top-2 {
+			  border-left: 1px solid #e0e1e1;
+			  border-right: 1px solid #e0e1e1;
+			}
+			.home-yunwei-top ul li:hover,
+			.home-yunwei-top ul li.active {
+			  border-bottom: 2px solid #00a0ea;
+			  cursor: pointer;
+			}
+			.icon_down_blue {
+			  width: 15px;
+			  height: 7px;
+			  background: url(./images/dropArrow.png) no-repeat;
+			  background-position: -14px top;
+			  cursor: pointer;
+			  position: absolute;
+			  bottom: -8px;
+			  left: 50%;
+			  margin-left: -8px;
+			  display: none;
+			}
+			.home-yunwei-top ul li:hover .icon_down_blue,
+			.home-yunwei-top ul li.active .icon_down_blue {
+			  display: block;
+			}
+			.home-yunwei-top-mask {
+			  width: 100%;
+			  height: 58px;
+			  z-index: 1;
+			  position: absolute;
+			  left: 0px;
+			  top: 0px;
+			}
+			/*首页运维报表小类*/
+			.home-yunwei-bottom {
+			  height: 60px;
+			  margin-top: 10px;
+			  border: 1px solid #e0e1e1;
+			  text-align: center;
+			  position: relative;
+			}
+			.home-yunwei-bottom ul li {
+			  width: 33.33333%;
+			  height: 58px;
+			  line-height: 58px;
+			  float: left;
+			}
+			.home-yunwei-number {
+			  font-size: 25px;
+			  margin-left: 10px;
+			}
+			.mui-grid-view.mui-grid-9 {
+				border-right: 1px solid #eee;
+				border-bottom: 1px solid #eee;
+				background-color: #fff;
+			}
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				padding: 5px 5px;
+				border-right: 0px solid #eee;
+				border-bottom: 0px solid #eee;
+			}
+			.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
+				font-size: 24px;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				font-size: 13px;
+			}
+			.mui-grid-view.mui-grid-9:after, .mui-grid-view.mui-grid-9:before {
+		    display: inline;
+			}
+		</style>
+		<script src="./js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<h5>系统健康状态</h5>
+				<div class="chart" id="barChart"></div>
+			</div>
+			<div class="mui-content-padded">
+				<h5>运维报表</h5>
+				<div class="home-yunwei-top">
+          <ul>
+            <li id="home-yunwei-top-1" class="active">
+              <div class="home-yunwei-top-mask"></div>
+              <span>未处理</span>
+              <span class="home-yunwei-number" style="color: #CD2626;">3</span>
+              <div class="icon_down_blue"></div>
+            </li>
+            <li id="home-yunwei-top-2">
+              <div class="home-yunwei-top-mask"></div>
+              <span>已处理</span>
+              <span class="home-yunwei-number" style="color: #66CD00;">15</span>
+              <div class="icon_down_blue"></div>
+            </li>
+            <li id="home-yunwei-top-3">
+              <div class="home-yunwei-top-mask"></div>
+              <span>总数</span>
+              <span class="home-yunwei-number" style="color: #09C;">18</span>
+              <div class="icon_down_blue"></div>
+            </li>
+          </ul>
+        </div>
+        <div class="home-yunwei-bottom">
+          <ul>
+            <li>
+              <span>一级</span>
+              <a class="home-yunwei-number" id="home-yunwei-bottom-1">0</a>
+            </li>
+            <li>
+              <span>二级</span>
+              <a class="home-yunwei-number" id="home-yunwei-bottom-2">1</a>
+            </li>
+            <li>
+              <span>三级</span>
+              <a class="home-yunwei-number" id="home-yunwei-bottom-3">2</a>
+            </li>
+          </ul>
+        </div>
+			</div>
+			<div class="mui-content-padded">
+				<h5>监控管理</h5>
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon-extra mui-icon-extra-share"></span>
+							<div class="mui-media-body">监测点</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon-extra mui-icon-extra-hotel"></span>
+							<div class="mui-media-body">服务器</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon-extra mui-icon-extra-gold"></span>
+							<div class="mui-media-body">数据库</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon-extra mui-icon-extra-computer"></span>
+							<div class="mui-media-body">业务系统</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script src="./libs/echarts.js"></script>
+		<script>
+			var option = {
+			    tooltip : {
+			      trigger: "axis",
+			      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			          type : "shadow",        // 默认为直线，可选为："line" | "shadow"
+			      },
+			    },
+			    color: ["#66CD00","#CD2626"],
+			    legend: {
+			        data: ["正常","异常"],
+			    },
+			    grid: {
+			        left: "3%",
+			        right: "4%",
+			        top: "15%",
+			        bottom: "3%",
+			        containLabel: true
+			    },
+			    xAxis:  {
+			        type: "category",
+			        data: ["监测点","服务器","数据库","业务系统"],
+			    },
+			    yAxis: {
+			        type: "value",
+			    },
+			    series : [
+			      {
+			          name: "正常",
+			          type: "bar",
+			          stack: "总量",
+			          barWidth: "30%",
+			          label: {
+			              normal: {
+			                  show: true
+			              }
+			          },
+			          data: [20, 4, 2, 3]
+			      },
+			      {
+			          name: "异常",
+			          type: "bar",
+			          stack: "总量",
+			          barWidth: "30%",
+			          label: {
+			              normal: {
+			                  show: true
+			              }
+			          },
+			          data: [2, 0, 0, 0]
+			      },
+			    ]
+			};
+			var barChart = echarts.init(document.getElementById('barChart'));
+			barChart.setOption(option);
+
+			let top1 = document.getElementById("home-yunwei-top-1");
+			let top2 = document.getElementById("home-yunwei-top-2");
+			let top3 = document.getElementById("home-yunwei-top-3");
+			let bottom1 = document.getElementById("home-yunwei-bottom-1");
+			let bottom2 = document.getElementById("home-yunwei-bottom-2");
+			let bottom3 = document.getElementById("home-yunwei-bottom-3");
+
+			top1.addEventListener("click", function(){
+				top1.className = 'active';
+        top2.className = '';
+        top3.className = '';
+				bottom1.innerHTML = 0;
+				bottom2.innerHTML = 1;
+				bottom3.innerHTML = 2;
+			});
+
+			top2.addEventListener("click", function(){
+        top1.className = '';
+        top2.className = 'active';
+        top3.className = '';
+				bottom1.innerHTML = 2;
+				bottom2.innerHTML = 4;
+				bottom3.innerHTML = 9;
+			});
+
+			top3.addEventListener("click", function(){
+        top1.className = '';
+        top2.className = '';
+        top3.className = 'active';
+				bottom1.innerHTML = 2;
+				bottom2.innerHTML = 5;
+				bottom3.innerHTML = 11;
+			});
+
+		</script>
+	</body>
+
+</html>
